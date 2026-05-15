@@ -1,0 +1,46 @@
+{
+  "name": "localdiff",
+  "version": "1.0.0",
+  "description": "A local two-pane text diff checker built with Electron.",
+  "main": "src/main.js",
+  "scripts": {
+    "dev": "electron .",
+    "start": "electron .",
+    "pack": "electron-builder --dir",
+    "dist": "electron-builder"
+  },
+  "keywords": [
+    "electron",
+    "diff",
+    "text",
+    "desktop",
+    "developer-tools"
+  ],
+  "author": "LocalDiff contributors",
+  "license": "MIT",
+  "engines": {
+    "node": ">=20"
+  },
+  "devDependencies": {
+    "electron": "^42.1.0",
+    "electron-builder": "^26.8.1"
+  },
+  "build": {
+    "appId": "com.localdiff.app",
+    "productName": "LocalDiff",
+    "files": [
+      "src/**/*",
+      "index.html",
+      "styles.css",
+      "renderer.js"
+    ],
+    "mac": {
+      "category": "public.app-category.developer-tools",
+      "identity": null,
+      "target": [
+        "dmg",
+        "zip"
+      ]
+    }
+  }
+}

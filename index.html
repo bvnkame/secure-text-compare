@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>LocalDiff</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <main class="app-shell">
+      <header class="topbar">
+        <div class="brand">
+          <div class="brand-mark">LD</div>
+          <div>
+            <h1>LocalDiff</h1>
+            <p>Private two-page text comparison</p>
+          </div>
+        </div>
+        <div class="metrics" aria-live="polite">
+          <span id="changeCount">0 changes</span>
+          <span id="lineCount">0 words</span>
+        </div>
+      </header>
+
+      <section class="controls" aria-label="Diff controls">
+        <button id="checkDiff" class="tool-button" type="button"><span>✓</span><small>Check</small></button>
+        <button id="loadLeft" class="tool-button" type="button"><span>L</span><small>Load left</small></button>
+        <button id="loadRight" class="tool-button" type="button"><span>R</span><small>Load right</small></button>
+        <button id="trimNewLines" class="tool-button" type="button"><span>1</span><small>One line</small></button>
+        <button id="saveSession" class="tool-button" type="button"><span>S</span><small>Save</small></button>
+        <button id="loadSession" class="tool-button" type="button"><span>O</span><small>Open</small></button>
+        <button id="exportReport" class="tool-button" type="button"><span>H</span><small>Report</small></button>
+        <button id="swapSides" class="tool-button" type="button"><span>⇄</span><small>Swap</small></button>
+        <button id="clearAll" class="tool-button" type="button"><span>×</span><small>Clear</small></button>
+        <div class="zoom-controls" aria-label="Zoom controls">
+          <button id="zoomOut" type="button">-</button>
+          <span id="zoomValue">100%</span>
+          <button id="zoomIn" type="button">+</button>
+        </div>
+        <label class="select-control">
+          <span>Format</span>
+          <select id="displayMode">
+            <option value="one-line">One line</option>
+            <option value="source">Source format</option>
+            <option value="grouped">Grouped</option>
+          </select>
+        </label>
+        <label class="select-control">
+          <span>Show</span>
+          <select id="changeFilter">
+            <option value="all">All</option>
+            <option value="added">Green</option>
+            <option value="changed">Yellow</option>
+            <option value="removed">Red</option>
+          </select>
+        </label>
+        <label class="select-control">
+          <span>Theme</span>
+          <select id="themeMode">
+            <option value="dark">Dark</option>
+            <option value="light">Light</option>
+          </select>
+        </label>
+        <label class="toggle">
+          <input id="wordWrap" type="checkbox" checked />
+          <span>Wrap</span>
+        </label>
+        <label class="toggle">
+          <input id="inlineWords" type="checkbox" checked />
+          <span>Word highlights</span>
+        </label>
+      </section>
+
+      <section class="editors" aria-label="Source text editors">
+        <article id="leftPanel" class="editor-panel">
+          <div class="panel-title">
+            <span>Left text</span>
+            <strong id="leftFileName">Unsaved text</strong>
+            <button class="panel-action" type="button" data-fullscreen-target="leftPanel" title="Toggle fullscreen">⛶</button>
+          </div>
+          <textarea id="leftInput" spellcheck="false" placeholder="Paste or load the original text..."></textarea>
+        </article>
+        <div class="pane-resizer" data-resize-scope="editors" aria-label="Resize editor panes"></div>
+        <article id="rightPanel" class="editor-panel">
+          <div class="panel-title">
+            <span>Right text</span>
+            <strong id="rightFileName">Unsaved text</strong>
+            <button class="panel-action" type="button" data-fullscreen-target="rightPanel" title="Toggle fullscreen">⛶</button>
+          </div>
+          <textarea id="rightInput" spellcheck="false" placeholder="Paste or load the changed text..."></textarea>
+        </article>
+      </section>
+
+      <div class="section-resizer" data-resize-scope="vertical" aria-label="Resize editors and result panels"></div>
+
+      <section id="diffFrame" class="diff-frame" aria-label="Rendered diff">
+        <div class="diff-toolbar">
+          <span>Rendered two-page word diff</span>
+          <div class="result-search" aria-label="Search result content">
+            <input id="resultSearch" type="search" placeholder="Search result..." />
+            <button id="searchPrev" type="button" title="Previous match">↑</button>
+            <button id="searchNext" type="button" title="Next match">↓</button>
+            <span id="searchCount">0/0</span>
+          </div>
+          <span id="hoverHint">Autosaved</span>
+          <button class="panel-action" type="button" data-fullscreen-target="diffFrame" title="Toggle fullscreen">⛶</button>
+        </div>
+        <div class="diff-pages">
+          <div id="leftDiff" class="diff-page" aria-label="Left diff output"></div>
+          <div class="pane-resizer" data-resize-scope="diff" aria-label="Resize diff panes"></div>
+          <div id="rightDiff" class="diff-page" aria-label="Right diff output"></div>
+        </div>
+        <aside id="miniMap" class="minimap" aria-label="Change minimap">
+          <div id="miniMapMarkers" class="minimap-markers"></div>
+          <div id="miniMapViewport" class="minimap-viewport"></div>
+        </aside>
+      </section>
+    </main>
+
+    <div id="tooltip" role="tooltip"></div>
+    <script src="./renderer.js"></script>
+  </body>
+</html>
