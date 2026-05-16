@@ -2,9 +2,15 @@
 
 A private local two-pane text comparison app built with Electron. Secure Text Compare compares text entirely on your machine and is designed for quick side-by-side review of plain text, PDFs, source snippets, logs, JSON, Markdown, and similar files.
 
+## Live Demo
+
+Try it in the browser: https://bvnkame.github.io/secure-text-compare/
+
+The web demo runs the same diff engine and renderer. File loading, session save/open, and HTML report use the browser file picker and downloads. PDF parsing and auto-update are desktop-only — install the app for those.
+
 ## Requirements
 
-- Node.js 20 or newer
+- Node.js 22.12.0 or newer
 - npm
 
 ## Run

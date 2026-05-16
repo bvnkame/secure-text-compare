@@ -108,6 +108,7 @@ select {
   background: rgba(16, 23, 34, 0.92);
   box-shadow: 0 28px 80px rgba(0, 0, 0, 0.48);
   padding: 16px;
+  color: #e7edf7;
 }
 
 .loading-mark {
@@ -118,7 +119,7 @@ select {
   border: 1px solid rgba(102, 217, 239, 0.44);
   border-radius: 8px;
   background: linear-gradient(145deg, rgba(102, 217, 239, 0.2), rgba(98, 211, 148, 0.14));
-  color: var(--blue);
+  color: #66d9ef;
   font: 800 13px/1 var(--display-font);
 }
 
@@ -133,11 +134,12 @@ select {
 .loading-panel strong {
   margin-top: 2px;
   font: 700 15px/1.25 var(--display-font);
+  color: #e7edf7;
 }
 
 .loading-panel span {
   margin-top: 4px;
-  color: var(--muted);
+  color: #95a3b8;
   font-size: 12px;
 }
 
