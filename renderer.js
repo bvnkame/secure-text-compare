@@ -1,5 +1,7 @@
 const leftInput = document.querySelector("#leftInput");
 const rightInput = document.querySelector("#rightInput");
+const loadingScreen = document.querySelector("#loadingScreen");
+const loadingMessage = document.querySelector("#loadingMessage");
 const leftDiff = document.querySelector("#leftDiff");
 const rightDiff = document.querySelector("#rightDiff");
 const diffPages = document.querySelector(".diff-pages");
@@ -53,6 +55,7 @@ let latestRows = [];
 let searchMatches = [];
 let updateReady = false;
 let exportHistory = [];
+let loadingDepth = 0;
 
 const sampleLeft = `Release notes
 
@@ -80,6 +83,26 @@ function escapeHtml(value) {
     .replaceAll("<", "&lt;")
     .replaceAll(">", "&gt;")
     .replaceAll('"', "&quot;");
+}
+
+function showLoading(message = "Working...") {
+  loadingDepth += 1;
+  loadingMessage.textContent = message;
+  loadingScreen.classList.remove("hidden");
+}
+
+function hideLoading() {
+  loadingDepth = Math.max(0, loadingDepth - 1);
+  if (loadingDepth === 0) {
+    loadingScreen.classList.add("hidden");
+  }
+}
+
+function finishInitialLoading() {
+  window.setTimeout(() => {
+    loadingDepth = 0;
+    loadingScreen.classList.add("hidden");
+  }, 420);
 }
 
 function normalizeOneLine(text) {
@@ -930,12 +953,15 @@ function startMiniMapViewportDrag(event) {
 
 async function loadFile(side) {
   let file;
+  showLoading(side === "left" ? "Loading left document..." : "Loading right document...");
 
   try {
     file = await window.secureTextCompare.openTextFile();
   } catch (error) {
     hoverHint.textContent = error?.message || "Could not load file.";
     return;
+  } finally {
+    hideLoading();
   }
 
   if (!file) {
@@ -997,13 +1023,29 @@ document.querySelector("#trimNewLines").addEventListener("click", () => {
   renderDiff();
 });
 document.querySelector("#saveSession").addEventListener("click", async () => {
-  const path = await window.secureTextCompare.saveSession(getSession());
+  showLoading("Saving session...");
+  let path;
+
+  try {
+    path = await window.secureTextCompare.saveSession(getSession());
+  } finally {
+    hideLoading();
+  }
+
   if (path) {
     hoverHint.textContent = `Saved: ${path}`;
   }
 });
 document.querySelector("#loadSession").addEventListener("click", async () => {
-  const result = await window.secureTextCompare.openSession();
+  showLoading("Opening session...");
+  let result;
+
+  try {
+    result = await window.secureTextCompare.openSession();
+  } finally {
+    hideLoading();
+  }
+
   if (result && result.session) {
     applySession(result.session);
     hoverHint.textContent = `Opened: ${result.path}`;
@@ -1012,12 +1054,15 @@ document.querySelector("#loadSession").addEventListener("click", async () => {
 exportReport.addEventListener("click", async () => {
   const metadata = exportMetadata();
   let result;
+  showLoading("Preparing export...");
 
   try {
     result = await window.secureTextCompare.saveHtmlReport(buildHtmlReport(), metadata);
   } catch (error) {
     hoverHint.textContent = error?.message || "Export failed.";
     return;
+  } finally {
+    hideLoading();
   }
 
   if (result) {
@@ -1166,3 +1211,4 @@ applyTheme();
 applyZoom();
 applyMiniMapZoom();
 renderDiff();
+finishInitialLoading();

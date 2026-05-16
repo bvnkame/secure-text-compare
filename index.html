@@ -7,6 +7,17 @@
     <link rel="stylesheet" href="./styles.css" />
   </head>
   <body>
+    <div id="loadingScreen" class="loading-screen" role="status" aria-live="polite">
+      <div class="loading-panel">
+        <div class="loading-mark">SC</div>
+        <div>
+          <strong>Secure Text Compare</strong>
+          <span id="loadingMessage">Preparing workspace...</span>
+        </div>
+        <div class="loading-bar" aria-hidden="true"><span></span></div>
+      </div>
+    </div>
+
     <main class="app-shell">
       <header class="topbar">
         <div class="brand">
