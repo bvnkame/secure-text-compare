@@ -1,0 +1,360 @@
+/* Tablet — keep controls in single horizontal scroll row */
+@media (max-width: 900px) {
+  .app-shell {
+    height: auto;
+    min-height: 100vh;
+    grid-template-rows: auto auto minmax(320px, auto) 10px minmax(420px, 1fr);
+    padding: 10px;
+    gap: 10px;
+  }
+
+  .topbar {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+  }
+
+  .metrics {
+    flex-wrap: wrap;
+  }
+
+  .controls {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    overflow-y: hidden;
+    padding: 6px 8px;
+    scrollbar-width: none;
+  }
+
+  .controls::-webkit-scrollbar {
+    display: none;
+  }
+
+  .controls > * {
+    flex: 0 0 auto;
+    margin-left: 0 !important;
+  }
+
+  .editors {
+    grid-template-columns: minmax(0, 1fr);
+    grid-auto-rows: minmax(180px, 1fr);
+    gap: 8px;
+  }
+
+  .editors > .pane-resizer {
+    display: none;
+  }
+
+  .diff-frame {
+    grid-template-columns: minmax(0, 1fr) 64px;
+  }
+
+  .diff-toolbar {
+    flex-wrap: wrap;
+    padding: 8px 40px 8px 12px;
+    gap: 8px;
+  }
+
+  .diff-toolbar > span:last-of-type:not(.panel-action) {
+    flex-basis: 100%;
+  }
+
+  .result-search input {
+    width: 100%;
+    flex: 1 1 auto;
+  }
+}
+
+/* Phone — sticky minimized header, controls pinned bottom, compact toolbar */
+@media (max-width: 600px) {
+  .app-shell {
+    grid-template-rows: auto minmax(180px, auto) 10px minmax(420px, 1fr) auto;
+    padding: 0;
+    gap: 8px;
+  }
+
+  .topbar { grid-row: 1; }
+  .editors { grid-row: 2; }
+  .section-resizer { grid-row: 3; display: none; }
+  .diff-frame { grid-row: 4; }
+  .controls { grid-row: 5; }
+
+  /* Minimized sticky header */
+  .topbar {
+    position: sticky;
+    top: 0;
+    z-index: 6;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    min-height: 40px;
+    margin: 0;
+    padding: 6px 10px;
+    border-radius: 0;
+    background: rgba(16, 23, 34, 0.94);
+    backdrop-filter: blur(14px);
+    border-bottom: 1px solid rgba(120, 148, 183, 0.18);
+  }
+
+  body.light-theme .topbar {
+    background: rgba(255, 255, 255, 0.94);
+  }
+
+  .topbar .brand p {
+    display: none;
+  }
+
+  .brand-mark {
+    width: 28px;
+    height: 24px;
+    font-size: 10px;
+  }
+
+  h1 {
+    font-size: 13px;
+  }
+
+  .metrics {
+    gap: 4px;
+  }
+
+  .metrics span {
+    min-width: 0;
+    padding: 3px 8px;
+    font-size: 10px;
+  }
+
+  /* Editors stacked */
+  .editors {
+    padding: 0 8px;
+    grid-template-columns: minmax(0, 1fr);
+    grid-auto-rows: minmax(160px, 1fr);
+  }
+
+  .editor-panel {
+    border-radius: 10px;
+  }
+
+  .panel-title,
+  .diff-toolbar {
+    padding: 0 0 0 10px;
+    min-height: 38px;
+    font-size: 11px;
+  }
+
+  .panel-title strong {
+    max-width: 52%;
+  }
+
+  textarea {
+    padding: 10px;
+    font-size: calc(13px * var(--text-zoom));
+  }
+
+  /* Diff frame stacked panes + horizontal minimap strip */
+  .diff-frame {
+    margin: 0 8px;
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: auto minmax(0, 1fr) auto;
+  }
+
+  .diff-pages {
+    grid-column: 1;
+    grid-row: 2;
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: minmax(180px, 1fr) 10px minmax(180px, 1fr);
+  }
+
+  .diff-pages > .pane-resizer {
+    width: 100%;
+    height: 10px;
+    cursor: row-resize;
+  }
+
+  .diff-pages > .pane-resizer::before {
+    inset: 3px 12px;
+  }
+
+  .minimap {
+    grid-column: 1;
+    grid-row: 3;
+    height: 56px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    border-left: 0;
+    border-top: 1px solid rgba(120, 148, 183, 0.14);
+  }
+
+  .minimap-markers {
+    min-height: 0;
+    height: 36px;
+    width: calc(100% * var(--minimap-zoom));
+    margin: 10px;
+  }
+
+  .minimap-marker {
+    height: 100%;
+    width: clamp(calc(3px * var(--minimap-zoom)), calc(var(--marker-height) * var(--minimap-zoom)), 34%);
+    min-width: 2px;
+    left: auto;
+    top: 0;
+  }
+
+  .minimap-marker.changed {
+    top: 34%;
+    height: 32%;
+    width: 2px;
+    min-width: 2px;
+    left: auto;
+  }
+
+  .minimap-marker.added,
+  .minimap-marker.removed {
+    top: 18%;
+    height: 64%;
+    min-height: 0;
+    width: auto;
+    min-width: 12px;
+  }
+
+  .minimap-viewport {
+    top: 7px;
+    bottom: 7px;
+    left: auto;
+    right: auto;
+    height: calc(100% - 14px);
+    min-height: 0;
+    width: 60px;
+  }
+
+  /* Sticky bottom controls — compact icon-only with scroll + collapsible advanced */
+  .controls {
+    position: sticky;
+    bottom: 0;
+    z-index: 6;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    grid-auto-rows: auto;
+    overflow: visible;
+    margin: 0;
+    padding: 8px 8px calc(8px + env(safe-area-inset-bottom, 0));
+    gap: 6px;
+    background: rgba(16, 23, 34, 0.96);
+    backdrop-filter: blur(14px);
+    border-radius: 0;
+    border-top: 1px solid rgba(120, 148, 183, 0.2);
+  }
+
+  body.light-theme .controls {
+    background: rgba(255, 255, 255, 0.96);
+  }
+
+  .controls .tool-button {
+    min-width: 52px !important;
+    height: 40px !important;
+    padding: 2px 6px !important;
+  }
+
+  .controls .tool-button small {
+    display: block;
+    max-width: 58px;
+    font-size: 9px;
+  }
+
+  .controls-primary {
+    grid-row: 1;
+    grid-column: 1;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    overflow-x: auto;
+    scrollbar-width: none;
+    padding-bottom: 2px;
+  }
+
+  .controls-primary::-webkit-scrollbar {
+    display: none;
+  }
+
+  .menu-toggle {
+    grid-row: 1;
+    grid-column: 2;
+    align-self: center;
+    height: 40px;
+    padding: 0 12px;
+    font-size: 12px;
+  }
+
+  .controls .controls-secondary {
+    grid-row: 2;
+    grid-column: 1 / -1;
+    display: none;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+
+  .controls.expanded .controls-secondary {
+    display: flex;
+  }
+
+  .modal {
+    width: 100%;
+    max-height: 92vh;
+  }
+
+  .export-log-item {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .export-log-item button {
+    justify-self: end;
+  }
+
+  .fullscreen-panel {
+    inset: 0 !important;
+    border-radius: 0 !important;
+  }
+}
+
+/* Hide menu-toggle + flatten primary/secondary wrappers on wider screens */
+@media (min-width: 601px) {
+  .menu-toggle {
+    display: none;
+  }
+  .controls-primary,
+  .controls-secondary {
+    display: contents;
+  }
+}
+
+/* Touch — bigger tap targets */
+@media (pointer: coarse) {
+  .tool-button,
+  .panel-action,
+  .controls button,
+  .result-search button {
+    min-height: 40px;
+  }
+
+  .tool-button {
+    min-width: 48px;
+  }
+
+  textarea {
+    -webkit-touch-callout: default;
+  }
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .loading-bar span {
+    animation: none;
+  }
+
+  .loading-screen,
+  .tooltip,
+  button {
+    transition: none;
+  }
+}

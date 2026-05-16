@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#090d14" />
+    <title>Secure Text Compare — Private local two-pane text diff</title>
+    <meta
+      name="description"
+      content="Secure Text Compare is a private desktop app for side-by-side comparison of text, PDFs, source code, logs, and JSON. All work stays on your machine."
+    />
+    <meta property="og:title" content="Secure Text Compare" />
+    <meta
+      property="og:description"
+      content="Private two-page text comparison for macOS, Windows, and Linux."
+    />
+    <meta property="og:type" content="website" />
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23101722'/%3E%3Ctext x='50%25' y='62%25' font-family='SF Pro Display,Inter,sans-serif' font-size='28' font-weight='800' fill='%2366d9ef' text-anchor='middle'%3ESC%3C/text%3E%3C/svg%3E" />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <a class="brand" href="./">
+        <span class="brand-mark">SC</span>
+        <span>
+          <strong>Secure Text Compare</strong>
+          <small>Private two-page text comparison</small>
+        </span>
+      </a>
+      <nav>
+        <a href="#features">Features</a>
+        <a href="#download">Download</a>
+        <a href="https://github.com/bvnkame/secure-text-compare" target="_blank" rel="noopener">GitHub</a>
+      </nav>
+    </header>
+
+    <main>
+      <section class="hero">
+        <div class="hero-copy">
+          <span class="badge">Free · MIT licensed · No telemetry</span>
+          <h1>Compare text without leaving your machine.</h1>
+          <p>
+            A side-by-side diff tool for plain text, PDFs, source code, logs, JSON, and Markdown.
+            Everything runs locally in an Electron app — your documents never hit a server.
+          </p>
+          <div class="cta-row">
+            <a class="btn primary" href="#download">Download</a>
+            <a class="btn ghost" href="https://github.com/bvnkame/secure-text-compare" target="_blank" rel="noopener">
+              View source ↗
+            </a>
+          </div>
+          <ul class="hero-bullets">
+            <li>Word-level diff with hover details</li>
+            <li>One-line, source, and grouped views</li>
+            <li>Local-only PDF text extraction</li>
+            <li>Auto-updates from GitHub Releases</li>
+          </ul>
+        </div>
+        <div class="hero-art" aria-hidden="true">
+          <div class="hero-window">
+            <div class="hero-window-bar">
+              <span></span><span></span><span></span>
+            </div>
+            <div class="hero-window-body">
+              <pre class="diff-mock"><span class="muted">Release notes</span>
+<span class="muted">Added project import from local</span> <span class="added">text and markdown</span> <span class="muted">files.</span>
+<span class="muted">Improved comparison rendering</span> <span class="changed">with synchronized scrolling.</span>
+<span class="muted">Fixed a layout issue in the review</span> <span class="changed">panel.</span>
+<span class="added">+ Added hover metadata for changed words.</span>
+<span class="removed">- iOS packaging needs a native wrapper.</span></pre>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="features" class="features">
+        <h2>What it does</h2>
+        <div class="feature-grid">
+          <article>
+            <h3>Two-page word diff</h3>
+            <p>Side-by-side word-level alignment using an LCS algorithm. Added, removed, and changed words are color-coded with hover context.</p>
+          </article>
+          <article>
+            <h3>Local PDF extract</h3>
+            <p>Load any PDF with selectable text and compare it like plain prose. Scanned image-only PDFs need OCR first; we tell you up front.</p>
+          </article>
+          <article>
+            <h3>Synced scrolling + minimap</h3>
+            <p>Both panes scroll in lockstep. A change minimap on the right lets you jump between blocks of edits at a glance.</p>
+          </article>
+          <article>
+            <h3>Display modes</h3>
+            <p>Switch between one-line, original-source formatting, or grouped runs. Filter the result to just added, removed, or changed words.</p>
+          </article>
+          <article>
+            <h3>HTML reports</h3>
+            <p>Preview a self-contained report of all additions and removals, then save it anywhere on disk. A local export log tracks recent exports.</p>
+          </article>
+          <article>
+            <h3>Private by design</h3>
+            <p>No analytics, no remote storage. The only network call is the optional auto-update check against GitHub Releases.</p>
+          </article>
+          <article>
+            <h3>Themes &amp; typography</h3>
+            <p>Dark and light themes. Pick from system, rounded, serif, or monospaced content fonts. Zoom independently of OS scaling.</p>
+          </article>
+          <article>
+            <h3>Cross-platform</h3>
+            <p>Signed-friendly builds for macOS (DMG/zip), Windows (NSIS/zip), and Linux (AppImage/deb). Mobile-responsive UI for narrow viewports.</p>
+          </article>
+        </div>
+      </section>
+
+      <section id="download" class="download">
+        <h2>Download</h2>
+        <p>Latest release packages are published on GitHub Releases for macOS, Windows, and Linux.</p>
+        <div class="download-grid">
+          <a class="download-card" href="https://github.com/bvnkame/secure-text-compare/releases/latest" target="_blank" rel="noopener">
+            <strong>macOS</strong>
+            <span>.dmg · .zip</span>
+          </a>
+          <a class="download-card" href="https://github.com/bvnkame/secure-text-compare/releases/latest" target="_blank" rel="noopener">
+            <strong>Windows</strong>
+            <span>.exe (NSIS) · .zip</span>
+          </a>
+          <a class="download-card" href="https://github.com/bvnkame/secure-text-compare/releases/latest" target="_blank" rel="noopener">
+            <strong>Linux</strong>
+            <span>.AppImage · .deb</span>
+          </a>
+        </div>
+        <p class="release-note">
+          Packaged builds include an in-app Update button that checks GitHub Releases.
+        </p>
+      </section>
+
+      <section class="build-from-source">
+        <h2>Build from source</h2>
+        <pre><code>git clone https://github.com/bvnkame/secure-text-compare
+cd secure-text-compare
+npm install
+npm run dev          # Electron + Vite dev server
+npm run dist         # Distributable installer for current OS</code></pre>
+      </section>
+    </main>
+
+    <footer>
+      <div>
+        <strong>Secure Text Compare</strong> · MIT License · <a href="https://github.com/bvnkame/secure-text-compare" target="_blank" rel="noopener">github.com/bvnkame/secure-text-compare</a>
+      </div>
+      <div class="muted">No tracking, no telemetry, no remote dependencies.</div>
+    </footer>
+  </body>
+</html>
