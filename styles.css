@@ -217,6 +217,17 @@ h1 {
   white-space: nowrap;
 }
 
+.tool-button.attention {
+  border-color: rgba(98, 211, 148, 0.76);
+  background: linear-gradient(180deg, rgba(41, 93, 68, 0.94), rgba(23, 63, 45, 0.94));
+}
+
+.tool-button:disabled {
+  cursor: wait;
+  opacity: 0.72;
+  transform: none;
+}
+
 .toggle {
   display: inline-flex;
   align-items: center;

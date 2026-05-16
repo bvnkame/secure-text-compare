@@ -1,6 +1,6 @@
 # Contributing
 
-Thanks for helping improve LocalDiff.
+Thanks for helping improve Secure Text Compare.
 
 ## Development
 

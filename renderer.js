@@ -26,8 +26,9 @@ const searchNext = document.querySelector("#searchNext");
 const searchCount = document.querySelector("#searchCount");
 const exportReport = document.querySelector("#exportReport");
 const checkDiff = document.querySelector("#checkDiff");
+const checkUpdate = document.querySelector("#checkUpdate");
 
-const STORAGE_KEY = "localdiff.session.v2";
+const STORAGE_KEY = "secure-text-compare.session.v1";
 const DEFAULT_ZOOM = 100;
 
 let syncLock = false;
@@ -41,6 +42,7 @@ let miniMapZoom = 100;
 let searchIndex = 0;
 let latestRows = [];
 let searchMatches = [];
+let updateReady = false;
 
 const sampleLeft = `Release notes
 
@@ -642,7 +644,7 @@ function buildHtmlReport() {
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-  <title>LocalDiff Report</title>
+  <title>Secure Text Compare Report</title>
   <style>
     :root { color-scheme: dark; font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
     body { margin: 0; background: #090d14; color: #e7edf7; padding: 28px; }
@@ -662,7 +664,7 @@ function buildHtmlReport() {
   </style>
 </head>
 <body>
-  <h1>LocalDiff Report</h1>
+  <h1>Secure Text Compare Report</h1>
   <p>Generated ${escapeHtml(generatedAt)} · ${added.length} green additions · ${removed.length} red removals</p>
   ${reportTable("Green additions", added, "added")}
   ${reportTable("Red removals", removed, "removed")}
@@ -835,7 +837,7 @@ function startMiniMapViewportDrag(event) {
 }
 
 async function loadFile(side) {
-  const file = await window.localDiff.openTextFile();
+  const file = await window.secureTextCompare.openTextFile();
   if (!file) {
     return;
   }
@@ -853,6 +855,33 @@ async function loadFile(side) {
   renderDiff();
 }
 
+function setUpdateStatus(status) {
+  if (!status) {
+    return;
+  }
+
+  hoverHint.textContent = status.message || "Update status changed.";
+  checkUpdate.classList.toggle("attention", status.state === "downloaded");
+  checkUpdate.disabled = status.state === "checking" || status.state === "downloading";
+
+  if (status.state === "downloaded") {
+    updateReady = true;
+    checkUpdate.querySelector("span").textContent = "⇧";
+    checkUpdate.querySelector("small").textContent = "Install";
+    return;
+  }
+
+  if (status.state === "checking" || status.state === "downloading") {
+    checkUpdate.querySelector("span").textContent = "…";
+    checkUpdate.querySelector("small").textContent = status.state === "checking" ? "Check" : "Get";
+    return;
+  }
+
+  updateReady = false;
+  checkUpdate.querySelector("span").textContent = "↻";
+  checkUpdate.querySelector("small").textContent = "Update";
+}
+
 checkDiff.addEventListener("click", () => {
   renderDiff();
   hoverHint.textContent = "Diff checked";
@@ -865,23 +894,35 @@ document.querySelector("#trimNewLines").addEventListener("click", () => {
   renderDiff();
 });
 document.querySelector("#saveSession").addEventListener("click", async () => {
-  const path = await window.localDiff.saveSession(getSession());
+  const path = await window.secureTextCompare.saveSession(getSession());
   if (path) {
     hoverHint.textContent = `Saved: ${path}`;
   }
 });
 document.querySelector("#loadSession").addEventListener("click", async () => {
-  const result = await window.localDiff.openSession();
+  const result = await window.secureTextCompare.openSession();
   if (result && result.session) {
     applySession(result.session);
     hoverHint.textContent = `Opened: ${result.path}`;
   }
 });
 exportReport.addEventListener("click", async () => {
-  const path = await window.localDiff.saveHtmlReport(buildHtmlReport());
+  const path = await window.secureTextCompare.saveHtmlReport(buildHtmlReport());
   if (path) {
     hoverHint.textContent = `Exported report: ${path}`;
   }
+});
+checkUpdate.addEventListener("click", async () => {
+  if (!window.secureTextCompare?.checkForUpdates) {
+    hoverHint.textContent = "Update checks are unavailable in this build.";
+    return;
+  }
+
+  const status = updateReady
+    ? await window.secureTextCompare.installUpdate()
+    : await window.secureTextCompare.checkForUpdates();
+
+  setUpdateStatus(status);
 });
 document.querySelector("#swapSides").addEventListener("click", () => {
   [leftInput.value, rightInput.value] = [rightInput.value, leftInput.value];
@@ -968,6 +1009,10 @@ document.addEventListener("keydown", (event) => {
     document.querySelector(".fullscreen-panel")?.classList.remove("fullscreen-panel");
   }
 });
+
+if (window.secureTextCompare?.onUpdateStatus) {
+  window.secureTextCompare.onUpdateStatus(setUpdateStatus);
+}
 
 loadSavedSession();
 applyPaneSizes();

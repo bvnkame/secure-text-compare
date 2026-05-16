@@ -1,13 +1,16 @@
 {
-  "name": "localdiff",
+  "name": "secure-text-compare",
   "version": "1.0.0",
-  "description": "A local two-pane text diff checker built with Electron.",
+  "description": "A private local two-pane text comparison app built with Electron.",
   "main": "src/main.js",
   "scripts": {
     "dev": "electron .",
     "start": "electron .",
     "pack": "electron-builder --dir",
-    "dist": "electron-builder"
+    "dist": "electron-builder",
+    "dist:mac": "electron-builder --mac",
+    "dist:win": "electron-builder --win",
+    "dist:linux": "electron-builder --linux"
   },
   "keywords": [
     "electron",
@@ -16,8 +19,16 @@
     "desktop",
     "developer-tools"
   ],
-  "author": "LocalDiff contributors",
+  "author": "Secure Text Compare contributors",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/bvnkame/secure-text-compare.git"
+  },
+  "homepage": "https://github.com/bvnkame/secure-text-compare#readme",
+  "bugs": {
+    "url": "https://github.com/bvnkame/secure-text-compare/issues"
+  },
   "engines": {
     "node": ">=20"
   },
@@ -26,13 +37,20 @@
     "electron-builder": "^26.8.1"
   },
   "build": {
-    "appId": "com.localdiff.app",
-    "productName": "LocalDiff",
+    "appId": "com.securetextcompare.app",
+    "productName": "Secure Text Compare",
+    "artifactName": "${productName}-${version}-${os}-${arch}.${ext}",
     "files": [
       "src/**/*",
       "index.html",
       "styles.css",
       "renderer.js"
+    ],
+    "publish": [
+      {
+        "provider": "github",
+        "releaseType": "release"
+      }
     ],
     "mac": {
       "category": "public.app-category.developer-tools",
@@ -41,6 +59,27 @@
         "dmg",
         "zip"
       ]
+    },
+    "win": {
+      "target": [
+        "nsis",
+        "zip"
+      ]
+    },
+    "nsis": {
+      "oneClick": false,
+      "perMachine": false,
+      "allowToChangeInstallationDirectory": true
+    },
+    "linux": {
+      "category": "Development",
+      "target": [
+        "AppImage",
+        "deb"
+      ]
     }
+  },
+  "dependencies": {
+    "electron-updater": "^6.8.3"
   }
 }

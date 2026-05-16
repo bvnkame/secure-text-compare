@@ -1,6 +1,6 @@
-# LocalDiff
+# Secure Text Compare
 
-A local two-pane text diff checker built with Electron. LocalDiff compares text entirely on your machine and is designed for quick side-by-side review of plain text, source snippets, logs, JSON, Markdown, and similar files.
+A private local two-pane text comparison app built with Electron. Secure Text Compare compares text entirely on your machine and is designed for quick side-by-side review of plain text, source snippets, logs, JSON, Markdown, and similar files.
 
 ## Requirements
 
@@ -20,6 +20,9 @@ npm run dev
 - `npm start` starts the Electron app.
 - `npm run pack` creates an unpacked desktop build.
 - `npm run dist` creates distributable desktop packages.
+- `npm run dist:mac` creates macOS packages.
+- `npm run dist:win` creates Windows packages.
+- `npm run dist:linux` creates Linux packages.
 
 ## Build Desktop App
 
@@ -27,7 +30,28 @@ npm run dev
 npm run dist
 ```
 
-The current Electron build targets macOS desktop packages through `electron-builder`.
+The Electron build targets macOS, Windows, and Linux packages through `electron-builder`.
+
+## CI/CD
+
+GitHub Actions builds installable packages for macOS, Windows, and Linux on pushes, pull requests, and manual runs. Build artifacts are uploaded from each platform job.
+
+Tag a release as `v1.2.3` to publish platform packages to GitHub Releases:
+
+```sh
+git tag v1.2.3
+git push origin v1.2.3
+```
+
+The release workflow uses `electron-builder` GitHub publishing metadata so packaged apps can discover updates from GitHub Releases.
+
+The default package metadata points to `bvnkame/secure-text-compare`. If you publish the repository under a different GitHub owner or name, update the `repository`, `homepage`, and `bugs` fields in `package.json` before creating releases.
+
+## Updates
+
+Packaged builds include a toolbar **Update** button. It checks GitHub Releases, downloads a newer version when one is available, and changes to **Install** after the update is ready.
+
+Update checks are disabled during `npm run dev` because Electron update metadata only exists in packaged release builds.
 
 ## Features
 
@@ -61,4 +85,4 @@ Issues and pull requests are welcome. See [CONTRIBUTING.md](CONTRIBUTING.md) for
 
 ## License
 
-LocalDiff is released under the [MIT License](LICENSE).
+Secure Text Compare is released under the [MIT License](LICENSE).

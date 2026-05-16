@@ -1,8 +1,15 @@
 const { contextBridge, ipcRenderer } = require("electron");
 
-contextBridge.exposeInMainWorld("localDiff", {
+contextBridge.exposeInMainWorld("secureTextCompare", {
   openTextFile: () => ipcRenderer.invoke("dialog:openTextFile"),
   saveSession: (session) => ipcRenderer.invoke("dialog:saveSession", session),
   openSession: () => ipcRenderer.invoke("dialog:openSession"),
-  saveHtmlReport: (html) => ipcRenderer.invoke("dialog:saveHtmlReport", html)
+  saveHtmlReport: (html) => ipcRenderer.invoke("dialog:saveHtmlReport", html),
+  checkForUpdates: () => ipcRenderer.invoke("updater:check"),
+  installUpdate: () => ipcRenderer.invoke("updater:install"),
+  onUpdateStatus: (callback) => {
+    const listener = (_event, status) => callback(status);
+    ipcRenderer.on("updater:status", listener);
+    return () => ipcRenderer.removeListener("updater:status", listener);
+  }
 });
