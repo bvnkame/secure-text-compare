@@ -23,11 +23,11 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/bvnkame/Secure-Text-Compare.git"
+    "url": "https://github.com/bvnkame/secure-text-compare.git"
   },
-  "homepage": "https://github.com/bvnkame/Secure-Text-Compare#readme",
+  "homepage": "https://github.com/bvnkame/secure-text-compare#readme",
   "bugs": {
-    "url": "https://github.com/bvnkame/Secure-Text-Compare/issues"
+    "url": "https://github.com/bvnkame/secure-text-compare/issues"
   },
   "engines": {
     "node": ">=20"

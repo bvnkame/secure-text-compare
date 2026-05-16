@@ -45,7 +45,7 @@ git push origin v1.2.3
 
 The release workflow uses `electron-builder` GitHub publishing metadata so packaged apps can discover updates from GitHub Releases.
 
-The default package metadata points to `bvnkame/Secure-Text-Compare`. If you publish the repository under a different GitHub owner or name, update the `repository`, `homepage`, and `bugs` fields in `package.json` before creating releases.
+The default package metadata points to `bvnkame/secure-text-compare`. If you publish the repository under a different GitHub owner or name, update the `repository`, `homepage`, and `bugs` fields in `package.json` before creating releases.
 
 ## Updates
 
