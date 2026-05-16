@@ -1,4 +1,4 @@
-const { app, BrowserWindow, dialog, ipcMain } = require("electron");
+const { app, BrowserWindow, dialog, ipcMain, shell } = require("electron");
 const { autoUpdater } = require("electron-updater");
 const { PDFParse } = require("pdf-parse");
 const path = require("node:path");
@@ -128,6 +128,30 @@ async function readComparableFile(filePath) {
   };
 }
 
+function safeFilePart(value) {
+  return String(value || "")
+    .trim()
+    .replace(/[<>:"/\\|?*\u0000-\u001f]/g, "-")
+    .replace(/\s+/g, "-")
+    .replace(/-+/g, "-")
+    .replace(/^-|-$/g, "")
+    .slice(0, 80);
+}
+
+function buildExportFileName(metadata = {}) {
+  const timestamp = new Date()
+    .toISOString()
+    .replace(/[:.]/g, "-")
+    .replace("T", "_")
+    .replace("Z", "");
+  const left = safeFilePart(metadata.leftName);
+  const right = safeFilePart(metadata.rightName);
+  const compared = [left, right].filter(Boolean).join("_vs_");
+  return compared
+    ? `secure-text-compare_${compared}_${timestamp}.html`
+    : `secure-text-compare-report_${timestamp}.html`;
+}
+
 app.whenReady().then(() => {
   setupAutoUpdater();
 
@@ -243,21 +267,53 @@ app.whenReady().then(() => {
     };
   });
 
-  ipcMain.handle("dialog:saveHtmlReport", async (_event, html) => {
-    const result = await dialog.showSaveDialog({
-      title: "Export Secure Text Compare HTML report",
-      defaultPath: "secure-text-compare-report.html",
-      filters: [
-        { name: "HTML Report", extensions: ["html"] }
-      ]
+  ipcMain.handle("dialog:saveHtmlReport", async (_event, html, metadata) => {
+    const result = await dialog.showOpenDialog({
+      title: "Choose export folder",
+      buttonLabel: "Export Here",
+      properties: ["openDirectory", "createDirectory"]
     });
 
-    if (result.canceled || !result.filePath) {
+    if (result.canceled || result.filePaths.length === 0) {
       return null;
     }
 
-    await fs.writeFile(result.filePath, html, "utf8");
-    return result.filePath;
+    const folderPath = result.filePaths[0];
+    const fileName = buildExportFileName(metadata);
+    const filePath = path.join(folderPath, fileName);
+
+    await fs.writeFile(filePath, html, "utf8");
+
+    const popup = await dialog.showMessageBox(mainWindow, {
+      type: "info",
+      title: "Export complete",
+      message: "Export complete",
+      detail: `Saved report to:\n${filePath}`,
+      buttons: ["Open Document", "Close"],
+      defaultId: 0,
+      cancelId: 1
+    });
+
+    if (popup.response === 0) {
+      await shell.openPath(filePath);
+    }
+
+    return {
+      fileName,
+      filePath,
+      folderPath,
+      opened: popup.response === 0,
+      exportedAt: new Date().toISOString()
+    };
+  });
+
+  ipcMain.handle("shell:openPath", async (_event, filePath) => {
+    if (!filePath) {
+      return { ok: false, error: "No file path provided." };
+    }
+
+    const error = await shell.openPath(filePath);
+    return error ? { ok: false, error } : { ok: true };
   });
 
   createWindow();

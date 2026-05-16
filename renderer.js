@@ -25,10 +25,19 @@ const searchPrev = document.querySelector("#searchPrev");
 const searchNext = document.querySelector("#searchNext");
 const searchCount = document.querySelector("#searchCount");
 const exportReport = document.querySelector("#exportReport");
+const exportLogs = document.querySelector("#exportLogs");
+const exportLogModal = document.querySelector("#exportLogModal");
+const exportLogList = document.querySelector("#exportLogList");
+const exportLogSummary = document.querySelector("#exportLogSummary");
+const closeExportLogs = document.querySelector("#closeExportLogs");
+const doneExportLogs = document.querySelector("#doneExportLogs");
+const clearExportLogs = document.querySelector("#clearExportLogs");
 const checkDiff = document.querySelector("#checkDiff");
 const checkUpdate = document.querySelector("#checkUpdate");
 
 const STORAGE_KEY = "secure-text-compare.session.v1";
+const EXPORT_LOG_KEY = "secure-text-compare.export-log.v1";
+const MAX_EXPORT_LOGS = 50;
 const DEFAULT_ZOOM = 100;
 
 let syncLock = false;
@@ -43,6 +52,7 @@ let searchIndex = 0;
 let latestRows = [];
 let searchMatches = [];
 let updateReady = false;
+let exportHistory = [];
 
 const sampleLeft = `Release notes
 
@@ -672,6 +682,88 @@ function buildHtmlReport() {
 </html>`;
 }
 
+function loadExportHistory() {
+  try {
+    const history = JSON.parse(localStorage.getItem(EXPORT_LOG_KEY) || "[]");
+    exportHistory = Array.isArray(history) ? history : [];
+  } catch {
+    exportHistory = [];
+  }
+}
+
+function saveExportHistory() {
+  localStorage.setItem(EXPORT_LOG_KEY, JSON.stringify(exportHistory.slice(0, MAX_EXPORT_LOGS)));
+}
+
+function exportSummary() {
+  const added = collectReportRows("added").length;
+  const removed = collectReportRows("removed").length;
+  const changedGroups = new Set(latestRows.filter((row) => row.group).map((row) => row.group)).size;
+  return { added, removed, changedGroups };
+}
+
+function exportMetadata() {
+  return {
+    leftName: leftFileName.textContent,
+    rightName: rightFileName.textContent,
+    changeCount: changeCount.textContent,
+    wordCount: wordCount.textContent,
+    summary: exportSummary()
+  };
+}
+
+function addExportLog(result, metadata) {
+  const summary = metadata.summary || exportSummary();
+  exportHistory = [{
+    id: `${Date.now()}-${Math.random().toString(16).slice(2)}`,
+    fileName: result.fileName,
+    filePath: result.filePath,
+    folderPath: result.folderPath,
+    exportedAt: result.exportedAt || new Date().toISOString(),
+    opened: Boolean(result.opened),
+    leftName: metadata.leftName,
+    rightName: metadata.rightName,
+    added: summary.added,
+    removed: summary.removed,
+    changedGroups: summary.changedGroups
+  }, ...exportHistory].slice(0, MAX_EXPORT_LOGS);
+  saveExportHistory();
+}
+
+function formatExportDate(value) {
+  const date = new Date(value);
+  return Number.isNaN(date.getTime()) ? "Unknown time" : date.toLocaleString();
+}
+
+function renderExportLogs() {
+  exportLogSummary.textContent = exportHistory.length
+    ? `${exportHistory.length} exported ${exportHistory.length === 1 ? "report" : "reports"}`
+    : "No exported reports yet";
+
+  exportLogList.innerHTML = exportHistory.length
+    ? exportHistory.map((item, index) => `
+      <article class="export-log-item">
+        <div>
+          <strong>${escapeHtml(item.fileName || "Secure Text Compare report")}</strong>
+          <span>${escapeHtml(formatExportDate(item.exportedAt))} · ${escapeHtml(item.changedGroups)} changes · +${escapeHtml(item.added)} / -${escapeHtml(item.removed)}</span>
+          <small>${escapeHtml(item.leftName || "Left text")} vs ${escapeHtml(item.rightName || "Right text")}</small>
+          <code>${escapeHtml(item.filePath || "")}</code>
+        </div>
+        <button type="button" data-open-export-index="${index}">Open</button>
+      </article>
+    `).join("")
+    : `<div class="export-log-empty">Exported reports will appear here after you create them.</div>`;
+}
+
+function showExportLogs() {
+  renderExportLogs();
+  exportLogModal.hidden = false;
+}
+
+function hideExportLogs() {
+  exportLogModal.hidden = true;
+}
+
 function applyChangeFilter() {
   const filter = changeFilter.value;
   const active = filter !== "all";
@@ -918,10 +1010,47 @@ document.querySelector("#loadSession").addEventListener("click", async () => {
   }
 });
 exportReport.addEventListener("click", async () => {
-  const path = await window.secureTextCompare.saveHtmlReport(buildHtmlReport());
-  if (path) {
-    hoverHint.textContent = `Exported report: ${path}`;
+  const metadata = exportMetadata();
+  let result;
+
+  try {
+    result = await window.secureTextCompare.saveHtmlReport(buildHtmlReport(), metadata);
+  } catch (error) {
+    hoverHint.textContent = error?.message || "Export failed.";
+    return;
   }
+
+  if (result) {
+    addExportLog(result, metadata);
+    hoverHint.textContent = `Exported report: ${result.filePath}`;
+  }
+});
+exportLogs.addEventListener("click", showExportLogs);
+closeExportLogs.addEventListener("click", hideExportLogs);
+doneExportLogs.addEventListener("click", hideExportLogs);
+clearExportLogs.addEventListener("click", () => {
+  exportHistory = [];
+  saveExportHistory();
+  renderExportLogs();
+});
+exportLogModal.addEventListener("click", (event) => {
+  if (event.target === exportLogModal) {
+    hideExportLogs();
+  }
+});
+exportLogList.addEventListener("click", async (event) => {
+  const button = event.target.closest("[data-open-export-index]");
+  if (!button) {
+    return;
+  }
+
+  const item = exportHistory[Number(button.dataset.openExportIndex)];
+  if (!item) {
+    return;
+  }
+
+  const result = await window.secureTextCompare.openPath(item.filePath);
+  hoverHint.textContent = result.ok ? `Opened export: ${item.fileName}` : `Could not open export: ${result.error}`;
 });
 checkUpdate.addEventListener("click", async () => {
   if (!window.secureTextCompare?.checkForUpdates) {
@@ -1017,6 +1146,11 @@ document.addEventListener("mousemove", showTooltip);
 document.addEventListener("mouseleave", () => tooltip.classList.remove("visible"));
 document.addEventListener("keydown", (event) => {
   if (event.key === "Escape") {
+    if (!exportLogModal.hidden) {
+      hideExportLogs();
+      return;
+    }
+
     document.querySelector(".fullscreen-panel")?.classList.remove("fullscreen-panel");
   }
 });
@@ -1025,6 +1159,7 @@ if (window.secureTextCompare?.onUpdateStatus) {
   window.secureTextCompare.onUpdateStatus(setUpdateStatus);
 }
 
+loadExportHistory();
 loadSavedSession();
 applyPaneSizes();
 applyTheme();

@@ -71,6 +71,7 @@ Update checks are disabled during `npm run dev` because Electron update metadata
 - Toggle inline word highlights.
 - Autosave text, settings, filenames, and zoom locally.
 - Save and reopen sessions as JSON files.
+- Export HTML reports to a selected folder with completion prompts and local export logs.
 - Resize editor/diff panels and zoom text size.
 - Drag the horizontal divider between editors and results to resize the top and bottom areas.
 - Expand the left editor, right editor, or result diff panel to fullscreen.
