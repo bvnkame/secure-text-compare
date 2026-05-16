@@ -56,6 +56,22 @@ body.light-theme {
   background: linear-gradient(135deg, #f8fbff 0%, #eef4fb 52%, #f8fafc 100%);
 }
 
+body[data-font-mode="rounded"] {
+  --ui-font: ui-rounded, "SF Pro Rounded", "Aptos", "Inter", ui-sans-serif, system-ui, sans-serif;
+  --display-font: ui-rounded, "SF Pro Rounded", "Aptos Display", "Inter", ui-sans-serif, system-ui, sans-serif;
+}
+
+body[data-font-mode="serif"] {
+  --ui-font: ui-serif, Georgia, "Times New Roman", serif;
+  --display-font: ui-serif, Georgia, "Times New Roman", serif;
+  --mono-font: "SFMono-Regular", "JetBrains Mono", "Cascadia Mono", Consolas, monospace;
+}
+
+body[data-font-mode="mono"] {
+  --ui-font: var(--mono-font);
+  --display-font: var(--mono-font);
+}
+
 button,
 textarea,
 input,

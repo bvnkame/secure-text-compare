@@ -16,6 +16,7 @@ const wordWrap = document.querySelector("#wordWrap");
 const displayMode = document.querySelector("#displayMode");
 const changeFilter = document.querySelector("#changeFilter");
 const themeMode = document.querySelector("#themeMode");
+const fontMode = document.querySelector("#fontMode");
 const changeCount = document.querySelector("#changeCount");
 const wordCount = document.querySelector("#lineCount");
 const leftFileName = document.querySelector("#leftFileName");
@@ -440,6 +441,7 @@ function getSession() {
     displayMode: displayMode.value,
     changeFilter: changeFilter.value,
     themeMode: themeMode.value,
+    fontMode: fontMode.value,
     editorLeftSize,
     diffLeftSize,
     editorsHeight,
@@ -461,6 +463,7 @@ function applySession(session) {
   displayMode.value = session.displayMode || "one-line";
   changeFilter.value = session.changeFilter || "all";
   themeMode.value = session.themeMode || "dark";
+  fontMode.value = session.fontMode || "system";
   editorLeftSize = Number(session.editorLeftSize) || 50;
   diffLeftSize = Number(session.diffLeftSize) || 50;
   editorsHeight = Number(session.editorsHeight) || editorsHeight;
@@ -469,6 +472,7 @@ function applySession(session) {
   zoom = Number(session.zoom) || DEFAULT_ZOOM;
   applyPaneSizes();
   applyTheme();
+  applyFontMode();
   applyZoom();
   applyMiniMapZoom();
   renderDiff();
@@ -856,6 +860,11 @@ function applyTheme() {
   scheduleSave();
 }
 
+function applyFontMode() {
+  document.body.dataset.fontMode = fontMode.value || "system";
+  scheduleSave();
+}
+
 function togglePanelFullscreen(targetId) {
   const target = document.querySelector(`#${targetId}`);
   if (!target) {
@@ -1185,6 +1194,7 @@ changeFilter.addEventListener("change", () => {
   scheduleSave();
 });
 themeMode.addEventListener("change", applyTheme);
+fontMode.addEventListener("change", applyFontMode);
 leftDiff.addEventListener("scroll", () => syncScroll(leftDiff, rightDiff));
 rightDiff.addEventListener("scroll", () => syncScroll(rightDiff, leftDiff));
 document.addEventListener("mousemove", showTooltip);
@@ -1208,6 +1218,7 @@ loadExportHistory();
 loadSavedSession();
 applyPaneSizes();
 applyTheme();
+applyFontMode();
 applyZoom();
 applyMiniMapZoom();
 renderDiff();

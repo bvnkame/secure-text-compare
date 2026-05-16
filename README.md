@@ -45,7 +45,7 @@ git push origin v1.2.3
 
 The release workflow uses `electron-builder` GitHub publishing metadata so packaged apps can discover updates from GitHub Releases.
 
-The default package metadata points to `bvnkame/secure-text-compare`. If you publish the repository under a different GitHub owner or name, update the `repository`, `homepage`, and `bugs` fields in `package.json` before creating releases.
+The default package metadata points to `bvnkame/Secure-Text-Compare`. If you publish the repository under a different GitHub owner or name, update the `repository`, `homepage`, and `bugs` fields in `package.json` before creating releases.
 
 ## Updates
 
@@ -61,6 +61,7 @@ Update checks are disabled during `npm run dev` because Electron update metadata
 - Convert both sides to one line by trimming and collapsing whitespace.
 - Render two-page one-line word diff output.
 - Switch diff display between one-line output and original source formatting.
+- Switch the app font between system, rounded, serif, and mono styles.
 - Use grouped diff mode to collapse equal runs and changed runs into aligned blocks.
 - Use the minimap on the right side of the result panel to jump between changed blocks.
 - Toggle word wrap for long text.
