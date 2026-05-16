@@ -41,7 +41,7 @@ jobs:
         run: npm ci
 
       - name: Publish release assets
-        run: npm run ${{ matrix.script }} -- --publish always
+        run: npm run ${{ matrix.script }} -- --publish=always
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           CSC_IDENTITY_AUTO_DISCOVERY: false
