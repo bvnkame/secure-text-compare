@@ -4,7 +4,7 @@ A private local two-pane text comparison app built with Electron. Secure Text Co
 
 ## Requirements
 
-- Node.js 20 or newer
+- Node.js 22.12.0 or newer
 - npm
 
 ## Run

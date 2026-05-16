@@ -1,6 +1,6 @@
 {
   "name": "secure-text-compare",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "description": "A private local two-pane text comparison app built with Electron.",
   "main": "src/main.js",
   "scripts": {
@@ -19,7 +19,10 @@
     "desktop",
     "developer-tools"
   ],
-  "author": "Secure Text Compare contributors",
+  "author": {
+    "name": "Secure Text Compare contributors",
+    "email": "bvnbase@gmail.com"
+  },
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -30,7 +33,7 @@
     "url": "https://github.com/bvnkame/secure-text-compare/issues"
   },
   "engines": {
-    "node": ">=20"
+    "node": ">=22.12.0"
   },
   "devDependencies": {
     "electron": "^42.1.0",
@@ -44,6 +47,7 @@
       "src/**/*",
       "index.html",
       "styles.css",
+      "web-shim.js",
       "renderer.js"
     ],
     "publish": [
@@ -76,7 +80,8 @@
       "target": [
         "AppImage",
         "deb"
-      ]
+      ],
+      "maintainer": "Secure Text Compare contributors <bvnbase@gmail.com>"
     }
   },
   "dependencies": {
