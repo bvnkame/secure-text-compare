@@ -1,6 +1,6 @@
 {
   "name": "secure-text-compare",
-  "version": "1.0.2",
+  "version": "1.1.0",
   "description": "A private local two-pane text comparison app built with Electron.",
   "main": "out/main/index.js",
   "scripts": {
