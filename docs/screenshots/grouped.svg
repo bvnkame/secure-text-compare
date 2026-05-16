@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 540" font-family="ui-sans-serif, system-ui, sans-serif">
+  <defs>
+    <linearGradient id="bg2" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#f5f7fb"/>
+      <stop offset="1" stop-color="#eef4fb"/>
+    </linearGradient>
+    <filter id="sh2"><feDropShadow dx="0" dy="14" stdDeviation="20" flood-color="#1f2937" flood-opacity="0.15"/></filter>
+  </defs>
+
+  <rect width="1200" height="540" fill="url(#bg2)"/>
+
+  <g filter="url(#sh2)">
+    <rect x="56" y="48" width="1088" height="444" rx="16" fill="#ffffff" stroke="#cbd5e1"/>
+
+    <!-- toolbar -->
+    <rect x="56" y="48" width="1088" height="42" fill="#f8fbff"/>
+    <line x1="56" y1="90" x2="1144" y2="90" stroke="#cbd5e1"/>
+    <text x="76" y="74" font-size="11" font-weight="700" fill="#111827" letter-spacing="0.04em">GROUPED DIFF · LIGHT THEME</text>
+    <rect x="780" y="56" width="220" height="26" rx="6" fill="#ffffff" stroke="#cbd5e1"/>
+    <text x="792" y="73" font-size="11" fill="#64748b">Search result...</text>
+    <text x="1014" y="73" font-size="11" fill="#64748b">3/7</text>
+    <text x="1106" y="73" font-size="14" fill="#64748b">⛶</text>
+
+    <!-- group blocks -->
+    <g font-family="SFMono-Regular, ui-monospace, Consolas, monospace" font-size="13" fill="#111827">
+      <!-- equal -->
+      <rect x="76" y="112" width="1048" height="58" rx="8" fill="#ffffff" stroke="#e2e8f0"/>
+      <text x="92" y="130" font-size="10" fill="#64748b" letter-spacing="0.06em">SAME WORDS 1-7</text>
+      <text x="92" y="156">Release notes Added project import from local</text>
+
+      <!-- changed -->
+      <rect x="76" y="184" width="1048" height="76" rx="8" fill="rgba(247,199,95,0.12)" stroke="rgba(217,119,6,0.4)"/>
+      <text x="92" y="202" font-size="10" fill="#d97706" letter-spacing="0.06em">CHANGE 1 · LEFT 8 · RIGHT 8-10</text>
+      <line x1="592" y1="184" x2="592" y2="260" stroke="rgba(217,119,6,0.3)"/>
+      <g><rect x="92" y="216" width="40" height="20" rx="3" fill="rgba(220,38,38,0.12)"/><text x="98" y="232" fill="#7f1d1d">text</text></g>
+      <text x="138" y="232">files</text>
+
+      <g transform="translate(516,0)"><rect x="92" y="216" width="178" height="20" rx="3" fill="rgba(22,163,74,0.12)"/><text x="98" y="232" fill="#14532d">text and markdown</text></g>
+      <text x="690" y="232">files</text>
+
+      <!-- equal -->
+      <rect x="76" y="274" width="1048" height="56" rx="8" fill="#ffffff" stroke="#e2e8f0"/>
+      <text x="92" y="292" font-size="10" fill="#64748b" letter-spacing="0.06em">SAME WORDS 9-13</text>
+      <text x="92" y="316">Improved comparison rendering for longer documents</text>
+
+      <!-- added -->
+      <rect x="76" y="344" width="1048" height="72" rx="8" fill="rgba(22,163,74,0.10)" stroke="rgba(22,163,74,0.45)"/>
+      <text x="92" y="362" font-size="10" fill="#16a34a" letter-spacing="0.06em">ADDED 4 · RIGHT 14-17</text>
+      <g><rect x="92" y="378" width="316" height="20" rx="3" fill="rgba(22,163,74,0.12)"/><text x="98" y="394" fill="#14532d">with synchronized scrolling</text></g>
+      <g transform="translate(0,22)"><rect x="92" y="378" width="332" height="20" rx="3" fill="rgba(22,163,74,0.12)"/><text x="98" y="394" fill="#14532d">Added hover metadata for changed words</text></g>
+
+      <!-- removed -->
+      <rect x="76" y="430" width="1048" height="56" rx="8" fill="rgba(220,38,38,0.08)" stroke="rgba(220,38,38,0.4)"/>
+      <text x="92" y="448" font-size="10" fill="#dc2626" letter-spacing="0.06em">REMOVED 1 · LEFT 22</text>
+      <g><rect x="92" y="464" width="276" height="20" rx="3" fill="rgba(220,38,38,0.12)"/><text x="98" y="480" fill="#7f1d1d">iOS packaging needs a native wrapper</text></g>
+    </g>
+  </g>
+</svg>

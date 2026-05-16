@@ -1,0 +1,148 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 720" font-family="ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#070b12"/>
+      <stop offset="0.55" stop-color="#0b1018"/>
+      <stop offset="1" stop-color="#11161f"/>
+    </linearGradient>
+    <radialGradient id="glow1" cx="0.18" cy="-0.05" r="0.8">
+      <stop offset="0" stop-color="#66d9ef" stop-opacity="0.18"/>
+      <stop offset="1" stop-color="#66d9ef" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="glow2" cx="0.95" cy="0.05" r="0.6">
+      <stop offset="0" stop-color="#62d394" stop-opacity="0.14"/>
+      <stop offset="1" stop-color="#62d394" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="20" stdDeviation="28" flood-color="#000" flood-opacity="0.42"/>
+    </filter>
+  </defs>
+
+  <rect width="1200" height="720" fill="url(#bg)"/>
+  <rect width="1200" height="720" fill="url(#glow1)"/>
+  <rect width="1200" height="720" fill="url(#glow2)"/>
+
+  <!-- App window -->
+  <g filter="url(#shadow)">
+    <rect x="48" y="56" width="1104" height="608" rx="16" fill="rgba(16,23,34,0.86)" stroke="rgba(120,148,183,0.22)"/>
+
+    <!-- Title bar -->
+    <g>
+      <circle cx="78" cy="84" r="6" fill="#ff6058"/>
+      <circle cx="100" cy="84" r="6" fill="#ffbd2e"/>
+      <circle cx="122" cy="84" r="6" fill="#28c93f"/>
+    </g>
+    <rect x="48" y="108" width="1104" height="1" fill="rgba(120,148,183,0.18)"/>
+
+    <!-- Brand + metrics -->
+    <g>
+      <rect x="72" y="124" width="38" height="32" rx="8" fill="rgba(102,217,239,0.18)" stroke="rgba(102,217,239,0.4)"/>
+      <text x="91" y="146" font-size="13" font-weight="800" fill="#66d9ef" text-anchor="middle">SC</text>
+      <text x="124" y="142" font-size="14" font-weight="700" fill="#e7edf7">Secure Text Compare</text>
+      <text x="124" y="158" font-size="11" fill="#95a3b8">Private two-page text comparison</text>
+      <rect x="980" y="128" width="78" height="22" rx="11" fill="rgba(255,255,255,0.04)" stroke="rgba(120,148,183,0.18)"/>
+      <text x="1019" y="143" font-size="11" fill="#95a3b8" text-anchor="middle">7 changes</text>
+      <rect x="1066" y="128" width="74" height="22" rx="11" fill="rgba(255,255,255,0.04)" stroke="rgba(120,148,183,0.18)"/>
+      <text x="1103" y="143" font-size="11" fill="#95a3b8" text-anchor="middle">142 words</text>
+    </g>
+
+    <!-- Controls row -->
+    <g transform="translate(72,176)">
+      <g font-size="11" font-weight="800" fill="#e7edf7">
+        <rect x="0" y="0" width="48" height="34" rx="8" fill="#1d2b3e" stroke="#2c3b52"/><text x="24" y="14" text-anchor="middle">✓</text><text x="24" y="28" text-anchor="middle" font-size="9" fill="#95a3b8">Check</text>
+        <rect x="54" y="0" width="48" height="34" rx="8" fill="#1d2b3e" stroke="#2c3b52"/><text x="78" y="14" text-anchor="middle">L</text><text x="78" y="28" text-anchor="middle" font-size="9" fill="#95a3b8">Load left</text>
+        <rect x="108" y="0" width="48" height="34" rx="8" fill="#1d2b3e" stroke="#2c3b52"/><text x="132" y="14" text-anchor="middle">R</text><text x="132" y="28" text-anchor="middle" font-size="9" fill="#95a3b8">Load right</text>
+        <rect x="162" y="0" width="48" height="34" rx="8" fill="#1d2b3e" stroke="#2c3b52"/><text x="186" y="14" text-anchor="middle">1</text><text x="186" y="28" text-anchor="middle" font-size="9" fill="#95a3b8">One line</text>
+        <rect x="216" y="0" width="48" height="34" rx="8" fill="#1d2b3e" stroke="#2c3b52"/><text x="240" y="14" text-anchor="middle">S</text><text x="240" y="28" text-anchor="middle" font-size="9" fill="#95a3b8">Save</text>
+        <rect x="270" y="0" width="48" height="34" rx="8" fill="#1d2b3e" stroke="#2c3b52"/><text x="294" y="14" text-anchor="middle">H</text><text x="294" y="28" text-anchor="middle" font-size="9" fill="#95a3b8">Report</text>
+      </g>
+      <g font-size="11" fill="#95a3b8">
+        <text x="350" y="14">Format</text>
+        <rect x="395" y="2" width="118" height="30" rx="8" fill="#142031" stroke="#2c3b52"/><text x="406" y="22" fill="#e7edf7">One line ▾</text>
+
+        <text x="540" y="14">Theme</text>
+        <rect x="582" y="2" width="84" height="30" rx="8" fill="#142031" stroke="#2c3b52"/><text x="592" y="22" fill="#e7edf7">Dark ▾</text>
+
+        <text x="690" y="14">Font</text>
+        <rect x="722" y="2" width="100" height="30" rx="8" fill="#142031" stroke="#2c3b52"/><text x="732" y="22" fill="#e7edf7">System ▾</text>
+      </g>
+    </g>
+
+    <!-- Editors row -->
+    <g transform="translate(72,228)">
+      <rect x="0" y="0" width="500" height="170" rx="10" fill="rgba(7,11,18,0.6)" stroke="rgba(120,148,183,0.18)"/>
+      <text x="14" y="22" font-size="10" fill="#95a3b8" letter-spacing="0.06em">LEFT TEXT</text>
+      <text x="80" y="22" font-size="11" font-weight="700" fill="#e7edf7">release-notes-v1.0.txt</text>
+      <g font-family="SFMono-Regular, ui-monospace, Consolas, monospace" font-size="11" fill="#cfdbe9">
+        <text x="14" y="50">Release notes</text>
+        <text x="14" y="68">Added project import from local text files.</text>
+        <text x="14" y="86">Improved comparison rendering for longer documents.</text>
+        <text x="14" y="104">Fixed a layout issue in the review sidebar.</text>
+        <text x="14" y="130">Known issues</text>
+        <text x="14" y="148">- Large binary files are not supported.</text>
+      </g>
+
+      <rect x="520" y="0" width="500" height="170" rx="10" fill="rgba(7,11,18,0.6)" stroke="rgba(120,148,183,0.18)"/>
+      <text x="534" y="22" font-size="10" fill="#95a3b8" letter-spacing="0.06em">RIGHT TEXT</text>
+      <text x="600" y="22" font-size="11" font-weight="700" fill="#e7edf7">release-notes-v1.1.txt</text>
+      <g font-family="SFMono-Regular, ui-monospace, Consolas, monospace" font-size="11" fill="#cfdbe9">
+        <text x="534" y="50">Release notes</text>
+        <text x="534" y="68">Added project import from local text and markdown files.</text>
+        <text x="534" y="86">Improved comparison rendering with synchronized scrolling.</text>
+        <text x="534" y="104">Fixed a layout issue in the review panel.</text>
+        <text x="534" y="122">Added hover metadata for changed words.</text>
+        <text x="534" y="140">Known issues</text>
+        <text x="534" y="158">- Large binary files are not supported.</text>
+      </g>
+    </g>
+
+    <!-- Diff frame -->
+    <g transform="translate(72,420)">
+      <rect x="0" y="0" width="1010" height="216" rx="12" fill="rgba(8,13,20,0.7)" stroke="rgba(120,148,183,0.18)"/>
+
+      <!-- toolbar -->
+      <rect x="0" y="0" width="1010" height="38" fill="rgba(7,11,18,0.5)"/>
+      <text x="14" y="24" font-size="11" font-weight="700" fill="#e7edf7">RENDERED TWO-PAGE WORD DIFF</text>
+      <rect x="650" y="6" width="230" height="26" rx="6" fill="rgba(7,11,18,0.76)" stroke="#2c3b52"/>
+      <text x="660" y="22" font-size="11" fill="#5e6d82">Search result...</text>
+      <text x="896" y="22" font-size="11" fill="#95a3b8">3/7</text>
+      <text x="970" y="24" font-size="14" fill="#95a3b8">⛶</text>
+
+      <!-- left pane -->
+      <g font-family="SFMono-Regular, ui-monospace, Consolas, monospace" font-size="12" fill="#e7edf7">
+        <text x="14" y="64">Release notes Added project import from local</text>
+        <g><rect x="14" y="72" width="38" height="16" rx="3" fill="rgba(255,93,120,0.16)"/><text x="18" y="84" fill="#ffd0d7">text</text></g>
+        <text x="58" y="84">files Improved comparison rendering for</text>
+        <text x="14" y="104">longer documents</text>
+        <g><rect x="116" y="92" width="2" height="14" fill="#f7c75f"/></g>
+        <g><rect x="122" y="92" width="80" height="16" rx="3" fill="rgba(247,199,95,0.17)"/><text x="126" y="104" fill="#ffe6a6">review sidebar</text></g>
+        <text x="14" y="124">Fixed a layout issue in the</text>
+      </g>
+
+      <line x1="497" y1="44" x2="497" y2="216" stroke="rgba(120,148,183,0.18)"/>
+
+      <!-- right pane -->
+      <g font-family="SFMono-Regular, ui-monospace, Consolas, monospace" font-size="12" fill="#e7edf7" transform="translate(497,0)">
+        <text x="14" y="64">Release notes Added project import from local</text>
+        <g><rect x="14" y="72" width="130" height="16" rx="3" fill="rgba(59,188,116,0.16)"/><text x="18" y="84" fill="#b9f8d1">text and markdown</text></g>
+        <text x="150" y="84">files</text>
+        <text x="14" y="104">Improved comparison rendering with</text>
+        <g><rect x="220" y="92" width="148" height="16" rx="3" fill="rgba(59,188,116,0.16)"/><text x="224" y="104" fill="#b9f8d1">synchronized scrolling</text></g>
+        <text x="14" y="124">Fixed a layout issue in the</text>
+        <g><rect x="180" y="112" width="56" height="16" rx="3" fill="rgba(247,199,95,0.17)"/><text x="184" y="124" fill="#ffe6a6">panel</text></g>
+        <g><rect x="14" y="132" width="332" height="16" rx="3" fill="rgba(59,188,116,0.16)"/><text x="18" y="144" fill="#b9f8d1">Added hover metadata for changed words</text></g>
+      </g>
+
+      <!-- minimap -->
+      <rect x="996" y="44" width="1" height="172" fill="rgba(120,148,183,0.18)"/>
+      <g transform="translate(996,0)" font-size="10" font-weight="800">
+        <rect x="-78" y="56" width="58" height="14" rx="3" fill="#62d394"/><text x="-49" y="66" text-anchor="middle" fill="#062512">+ 9</text>
+        <rect x="-78" y="86" width="58" height="14" rx="3" fill="#62d394"/><text x="-49" y="96" text-anchor="middle" fill="#062512">+ 4</text>
+        <rect x="-78" y="116" width="58" height="2" rx="1" fill="#f7c75f"/>
+        <rect x="-78" y="138" width="58" height="14" rx="3" fill="#ff7185"/><text x="-49" y="148" text-anchor="middle" fill="#30070f">- 3</text>
+        <rect x="-78" y="168" width="58" height="14" rx="3" fill="#62d394"/><text x="-49" y="178" text-anchor="middle" fill="#062512">+ 5</text>
+        <rect x="-78" y="56" width="60" height="130" rx="5" fill="none" stroke="rgba(231,237,247,0.55)"/>
+      </g>
+    </g>
+  </g>
+</svg>

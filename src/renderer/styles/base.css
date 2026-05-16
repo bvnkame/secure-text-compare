@@ -42,6 +42,12 @@ body.light-theme {
   box-sizing: border-box;
 }
 
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  touch-action: manipulation;
+}
+
 body {
   margin: 0;
   min-height: 100vh;
@@ -50,6 +56,7 @@ body {
     linear-gradient(135deg, #090d14 0%, #0c111b 48%, #11161f 100%);
   color: var(--text);
   font-family: var(--ui-font);
+  touch-action: manipulation;
 }
 
 body.light-theme {

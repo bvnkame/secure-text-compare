@@ -1,15 +1,44 @@
-# Secure Text Compare
+<h1 align="center">Secure Text Compare</h1>
 
-A private local two-pane text comparison app built with Electron. Secure Text Compare compares text entirely on your machine and is designed for quick side-by-side review of plain text, PDFs, source snippets, logs, JSON, Markdown, and similar files.
+<p align="center">
+  <strong>Private local two-pane text comparison.</strong><br/>
+  Word-level diff for plain text, PDFs, source code, logs, JSON, and Markdown — entirely on your machine.
+</p>
+
+<p align="center">
+  <a href="https://bvnkame.github.io/secure-text-compare/demo/">Try in browser</a> ·
+  <a href="https://github.com/bvnkame/secure-text-compare/releases/latest">Download</a> ·
+  <a href="https://bvnkame.github.io/secure-text-compare/">Landing page</a> ·
+  <a href="#features">Features</a>
+</p>
+
+<p align="center">
+  <img src="docs/screenshots/hero.svg" alt="Secure Text Compare — dark theme two-page word diff with minimap" width="100%"/>
+</p>
 
 ## Live Demo
 
 - Landing page: <https://bvnkame.github.io/secure-text-compare/>
-- Try in browser: <https://bvnkame.github.io/secure-text-compare/demo/>
+- Browser demo: <https://bvnkame.github.io/secure-text-compare/demo/>
 
-The web demo runs the same React renderer and diff engine. File loading, PDF
-extraction, session save/open, and HTML report export are desktop-only — install
-the packaged app for those. Auto-update is also desktop-only.
+The web demo runs the same React renderer and diff engine. Load/save uses the
+browser file picker and downloads. PDF text extraction and auto-update are
+desktop-only — install the packaged app for those.
+
+## Screenshots
+
+<table>
+<tr>
+<td width="60%" valign="top">
+  <img src="docs/screenshots/grouped.svg" alt="Grouped diff view in light theme" width="100%"/>
+  <p align="center"><sub>Grouped diff · light theme</sub></p>
+</td>
+<td width="40%" valign="top">
+  <img src="docs/screenshots/mobile.svg" alt="Mobile responsive layout with sticky header and bottom controls" width="100%"/>
+  <p align="center"><sub>Mobile responsive layout</sub></p>
+</td>
+</tr>
+</table>
 
 ## Requirements
 

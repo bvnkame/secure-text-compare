@@ -147,9 +147,15 @@
     max-width: 52%;
   }
 
+  textarea,
+  .result-search input,
+  .select-control select {
+    /* iOS Safari auto-zooms when a focused input's font-size < 16px. Force 16px on mobile. */
+    font-size: 16px;
+  }
+
   textarea {
     padding: 10px;
-    font-size: calc(13px * var(--text-zoom));
   }
 
   /* Diff frame stacked panes + horizontal minimap strip */
