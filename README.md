@@ -4,9 +4,12 @@ A private local two-pane text comparison app built with Electron. Secure Text Co
 
 ## Live Demo
 
-Try it in the browser: https://bvnkame.github.io/secure-text-compare/
+- Landing page: <https://bvnkame.github.io/secure-text-compare/>
+- Try in browser: <https://bvnkame.github.io/secure-text-compare/demo/>
 
-The web demo runs the same diff engine and renderer. File loading, session save/open, and HTML report use the browser file picker and downloads. PDF parsing and auto-update are desktop-only — install the app for those.
+The web demo runs the same React renderer and diff engine. File loading, PDF
+extraction, session save/open, and HTML report export are desktop-only — install
+the packaged app for those. Auto-update is also desktop-only.
 
 ## Requirements
 
@@ -29,6 +32,7 @@ npm run dev
 - `npm run dist:mac` creates macOS packages.
 - `npm run dist:win` creates Windows packages.
 - `npm run dist:linux` creates Linux packages.
+- `npm run build:web` builds the browser demo (renderer only) into `dist-web/`.
 
 ## Build Desktop App
 

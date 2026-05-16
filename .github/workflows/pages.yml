@@ -1,4 +1,4 @@
-name: Deploy landing page
+name: Deploy landing + web demo
 
 on:
   push:
@@ -6,6 +6,10 @@ on:
       - main
     paths:
       - "docs/**"
+      - "src/renderer/**"
+      - "vite.web.config.js"
+      - "package.json"
+      - "package-lock.json"
       - ".github/workflows/pages.yml"
   workflow_dispatch:
 
@@ -25,10 +29,29 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22.12.0
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build web demo
+        run: npm run build:web
+
+      - name: Stage site
+        run: |
+          mkdir -p _site
+          cp -R docs/. _site/
+          mkdir -p _site/demo
+          cp -R dist-web/. _site/demo/
+
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: docs
+          path: _site
 
   deploy:
     needs: build

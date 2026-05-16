@@ -143,6 +143,12 @@ main {
 
 .btn.ghost:hover { border-color: rgba(102, 217, 239, 0.4); color: var(--blue); }
 
+.demo-note {
+  margin-top: -4px;
+  margin-bottom: 24px;
+  font-size: 13px;
+}
+
 .hero-bullets {
   list-style: none;
   margin: 0;
