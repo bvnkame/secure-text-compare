@@ -837,7 +837,15 @@ function startMiniMapViewportDrag(event) {
 }
 
 async function loadFile(side) {
-  const file = await window.secureTextCompare.openTextFile();
+  let file;
+
+  try {
+    file = await window.secureTextCompare.openTextFile();
+  } catch (error) {
+    hoverHint.textContent = error?.message || "Could not load file.";
+    return;
+  }
+
   if (!file) {
     return;
   }
@@ -853,6 +861,9 @@ async function loadFile(side) {
   }
 
   renderDiff();
+  hoverHint.textContent = file.type === "pdf"
+    ? `Loaded PDF text from ${file.name}${file.pages ? ` (${file.pages} pages)` : ""}`
+    : `Loaded text from ${file.name}`;
 }
 
 function setUpdateStatus(status) {

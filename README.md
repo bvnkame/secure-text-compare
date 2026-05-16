@@ -1,6 +1,6 @@
 # Secure Text Compare
 
-A private local two-pane text comparison app built with Electron. Secure Text Compare compares text entirely on your machine and is designed for quick side-by-side review of plain text, source snippets, logs, JSON, Markdown, and similar files.
+A private local two-pane text comparison app built with Electron. Secure Text Compare compares text entirely on your machine and is designed for quick side-by-side review of plain text, PDFs, source snippets, logs, JSON, Markdown, and similar files.
 
 ## Requirements
 
@@ -56,7 +56,8 @@ Update checks are disabled during `npm run dev` because Electron update metadata
 ## Features
 
 - Paste text directly into the left and right editors.
-- Load local text files into either side.
+- Load local text or PDF files into either side.
+- Extract and compare selectable PDF text locally.
 - Convert both sides to one line by trimming and collapsing whitespace.
 - Render two-page one-line word diff output.
 - Switch diff display between one-line output and original source formatting.

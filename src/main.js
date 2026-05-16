@@ -1,5 +1,6 @@
 const { app, BrowserWindow, dialog, ipcMain } = require("electron");
 const { autoUpdater } = require("electron-updater");
+const { PDFParse } = require("pdf-parse");
 const path = require("node:path");
 const fs = require("node:fs/promises");
 
@@ -87,6 +88,46 @@ function createWindow() {
   });
 }
 
+async function extractPdfText(filePath) {
+  const data = await fs.readFile(filePath);
+  const parser = new PDFParse({ data });
+
+  try {
+    const result = await parser.getText({ pageJoiner: "\n\n" });
+    const text = result.text.trim();
+
+    if (!text) {
+      throw new Error("This PDF does not contain extractable text. Scanned image-only PDFs need OCR before comparison.");
+    }
+
+    return {
+      text,
+      pages: result.total || null
+    };
+  } finally {
+    await parser.destroy();
+  }
+}
+
+async function readComparableFile(filePath) {
+  const extension = path.extname(filePath).toLowerCase();
+
+  if (extension === ".pdf") {
+    const pdf = await extractPdfText(filePath);
+    return {
+      text: pdf.text,
+      type: "pdf",
+      pages: pdf.pages
+    };
+  }
+
+  return {
+    text: await fs.readFile(filePath, "utf8"),
+    type: "text",
+    pages: null
+  };
+}
+
 app.whenReady().then(() => {
   setupAutoUpdater();
 
@@ -138,9 +179,11 @@ app.whenReady().then(() => {
 
   ipcMain.handle("dialog:openTextFile", async () => {
     const result = await dialog.showOpenDialog({
-      title: "Choose a text file",
+      title: "Choose a text or PDF file",
       properties: ["openFile"],
       filters: [
+        { name: "Text and PDF files", extensions: ["txt", "md", "json", "csv", "log", "xml", "html", "css", "js", "ts", "pdf"] },
+        { name: "PDF files", extensions: ["pdf"] },
         { name: "Text files", extensions: ["txt", "md", "json", "csv", "log", "xml", "html", "css", "js", "ts"] },
         { name: "All files", extensions: ["*"] }
       ]
@@ -151,11 +194,13 @@ app.whenReady().then(() => {
     }
 
     const filePath = result.filePaths[0];
-    const text = await fs.readFile(filePath, "utf8");
+    const comparableFile = await readComparableFile(filePath);
     return {
       name: path.basename(filePath),
       path: filePath,
-      text
+      text: comparableFile.text,
+      type: comparableFile.type,
+      pages: comparableFile.pages
     };
   });
 
